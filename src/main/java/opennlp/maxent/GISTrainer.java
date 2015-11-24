@@ -20,6 +20,8 @@
 package opennlp.maxent;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import opennlp.model.DataIndexer;
 import opennlp.model.EvalParameters;
@@ -218,16 +220,30 @@ class GISTrainer {
     return trainModel(iterations,di,new UniformPrior(),cutoff);
   }
 
+ /**
+  * Train a model using the GIS algorithm.
+  *
+  * @param iterations  The number of GIS iterations to perform.
+  * @param di The data indexer used to compress events in memory.
+  * @param modelPrior The prior distribution used to train this model.
+  * @return The newly trained model, which can be used immediately or saved
+  *         to disk using an opennlp.maxent.io.GISModelWriter object.
+  */
+ public GISModel trainModel(int iterations, DataIndexer di, Prior modelPrior, int cutoff) {
+ 	return trainModel( iterations, di, modelPrior, cutoff, 0);
+ }
+	
   /**
    * Train a model using the GIS algorithm.
    *
    * @param iterations  The number of GIS iterations to perform.
    * @param di The data indexer used to compress events in memory.
    * @param modelPrior The prior distribution used to train this model.
+   * @param type The correctionConstant computation: 0: as in opennlpmaxent-3.0.0 and 1 for textual attributes.
    * @return The newly trained model, which can be used immediately or saved
    *         to disk using an opennlp.maxent.io.GISModelWriter object.
    */
-  public GISModel trainModel(int iterations, DataIndexer di, Prior modelPrior, int cutoff) {
+  public GISModel trainModel(int iterations, DataIndexer di, Prior modelPrior, int cutoff, int type) {
     /************** Incorporate all of the needed info ******************/
     display("Incorporating indexed data for training...  \n");
     contexts = di.getContexts();
@@ -241,23 +257,49 @@ class GISTrainer {
 
     // determine the correction constant and its inverse
     int correctionConstant = 1;
-    for (int ci = 0; ci < contexts.length; ci++) {
-      if (values == null || values[ci] == null) {
-        if (contexts[ci].length > correctionConstant) {
-          correctionConstant = contexts[ci].length;
+	if (type == 0) {
+		for (int ci = 0; ci < contexts.length; ci++) {
+		  if (values == null || values[ci] == null) {
+			if (contexts[ci].length > correctionConstant) {
+			  correctionConstant = contexts[ci].length;
+			}
+		  }
+		  else {
+			float cl = values[ci][0];
+			for (int vi=1;vi<values[ci].length;vi++) {
+			  cl+=values[ci][vi];
+			}
+			
+			if (cl > correctionConstant) {
+			  correctionConstant=(int) Math.ceil(cl);
+			}
+		  }
+		}
+	} else if (type == 1) {
+		ArrayList<Integer> lengths = new ArrayList<Integer>(); 
+        for (int ci = 0; ci < contexts.length; ci++) {
+	    	lengths.add(contexts[ci].length);  
         }
-      }
-      else {
-        float cl = values[ci][0];
-        for (int vi=1;vi<values[ci].length;vi++) {
-          cl+=values[ci][vi];
-        }
+        Collections.sort(lengths);
+        System.out.println("nr of event sizes: " + lengths.size());
         
-        if (cl > correctionConstant) {
-          correctionConstant=(int) Math.ceil(cl);
-        }
-      }
-    }
+        for (int i = 0; i < lengths.size(); i++) {
+    		System.out.print(lengths.get(i) + ", ");
+    	}
+        System.out.println();
+        
+        if (lengths.size() % 2 == 1) {
+        	correctionConstant = (Integer) lengths.get((int)( (lengths.size()+1) /2 -1));
+        } else {
+        	int lower = (Integer) lengths.get((int)(lengths.size()/2 -1));
+        	int upper = (Integer) lengths.get((int)(lengths.size()/2));
+			
+        	correctionConstant =  (int) ((lower + upper) / 2.0);
+        }	
+	}
+	  
+	display("correctionConst: " + correctionConstant +"\n");
+
     display("done.\n");
 
     outcomeLabels = di.getOutcomeLabels();
