@@ -8,7 +8,7 @@ Dataset folder:
 
 gis-maxent
 - package downloaded from [Sourceforge Maxent](https://sourceforge.net/projects/maxent/files/Maxent/3.0.0/) project
-- modification of opennlp.maxent.GISTrainer: correction constant from max length of a feature vector to be median length of feature vector (lines 307-326)
+- modification of opennlp.maxent.GISTrainer: offer correction constant alternative to maximum length of a feature vector (previous implementation) to median length of feature vector (modified version: lines 307-326)
 
 Java wrapper functions:
 - training:
