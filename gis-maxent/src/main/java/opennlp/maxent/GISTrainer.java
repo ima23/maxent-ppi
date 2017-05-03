@@ -207,7 +207,21 @@ class GISTrainer {
   public GISModel trainModel(EventStream eventStream, int iterations, int cutoff) throws IOException {
     return trainModel(iterations, new OnePassDataIndexer(eventStream,cutoff),cutoff);
   }
-  
+
+
+  /**
+   * Trains a GIS model on the event in the specified event stream, using the specified number
+   * of iterations and the specified count cutoff.
+   * @param eventStream A stream of all events.
+   * @param iterations The number of iterations to use for GIS.
+   * @param cutoff The number of times a feature must occur to be included.
+   * @return A GIS model trained with specified
+   */
+  public GISModel trainModel(EventStream eventStream, int iterations, int cutoff, int type) throws IOException {
+    return trainModel(iterations, new OnePassDataIndexer(eventStream,cutoff),cutoff, type);
+  }
+
+
   /**
    * Train a model using the GIS algorithm.
    *
@@ -219,6 +233,20 @@ class GISTrainer {
   public GISModel trainModel(int iterations, DataIndexer di, int cutoff) {
     return trainModel(iterations,di,new UniformPrior(),cutoff);
   }
+
+  /**
+   * Train a model using the GIS algorithm.
+   *
+   * @param iterations  The number of GIS iterations to perform.
+   * @param di The data indexer used to compress events in memory.
+   * @param type 0: opennlp default implementation, 1: mean correction
+   * @return The newly trained model, which can be used immediately or saved
+   *         to disk using an opennlp.maxent.io.GISModelWriter object.
+   */
+  public GISModel trainModel(int iterations, DataIndexer di, int cutoff, int type) {
+    return trainModel(iterations,di,new UniformPrior(),cutoff, type);
+  }
+
 
  /**
   * Train a model using the GIS algorithm.

@@ -113,6 +113,33 @@ public class GIS {
       trainer.setSmoothingObservation(SMOOTHING_OBSERVATION);
       return trainer.trainModel(eventStream, iterations, cutoff);
     }
+
+    /**
+     * Train a model using the GIS algorithm.
+     * @param eventStream The EventStream holding the data on which this model
+     *                    will be trained.
+     * @param iterations  The number of GIS iterations to perform.
+     * @param cutoff      The number of times a feature must be seen in order
+     *                    to be relevant for training.
+     * @param smoothing   Defines whether the created trainer will use smoothing
+     *                    while training the model.
+     * @param printMessagesWhileTraining Determines whether training status messages are written to STDOUT.
+     * @param type 0: use original opennlp implementation, 1: use protein co-complex application implementation
+     * @return The newly trained model, which can be used immediately or saved
+     *         to disk using an opennlp.maxent.io.GISModelWriter object.
+     */
+    public static GISModel trainModel(EventStream eventStream,
+                                      int iterations,
+                                      int cutoff,
+                                      boolean smoothing,boolean printMessagesWhileTraining, int type) throws IOException {
+        GISTrainer trainer = new GISTrainer(printMessagesWhileTraining);
+        trainer.setSmoothing(smoothing);
+        trainer.setSmoothingObservation(SMOOTHING_OBSERVATION);
+        return trainer.trainModel(eventStream, iterations, cutoff, type);
+    }
+
+
+
     
      /**
      * Train a model using the GIS algorithm.
