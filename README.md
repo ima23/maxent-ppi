@@ -12,8 +12,10 @@ gis-maxent
 
 Java wrapper functions:
 - training:
-```java -jar MaxEntWrapper.jar -train -i train.dat -o model.out```
-- evaluation:
-```java -jar MaxEntWrapper.jar -eval -i test.dat -m model.out -o test.out```
-- export weights:
-```java -jar MaxEntWrapper.jar -weight -i model.out -o modelWeights.out```
+```java -jar maxent-ppi-wrapper.jar -train -i train.dat -o model.out```
+- evaluation: 
+```java -jar maxent-ppi-wrapper.jar -eval -i test.dat -m model.out -o test.out```
+- evaluation with raw scores:
+```java -jar maxent-ppi-wrapper.jar -evalScore -i test.dat -m model.out -o test.out```
+- export weights: 
+```java -jar maxent-ppi-wrapper.jar -weight -i model.out -o modelWeights.out```
