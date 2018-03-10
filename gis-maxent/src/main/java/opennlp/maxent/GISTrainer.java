@@ -305,28 +305,28 @@ class GISTrainer {
 		}
 	} else if (type == 1) {
 		ArrayList<Integer> lengths = new ArrayList<Integer>(); 
-        for (int ci = 0; ci < contexts.length; ci++) {
-	    	lengths.add(contexts[ci].length);  
-        }
-        Collections.sort(lengths);
-        System.out.println("nr of event sizes: " + lengths.size());
-        
-        for (int i = 0; i < lengths.size(); i++) {
-    		System.out.print(lengths.get(i) + ", ");
-    	}
-        System.out.println();
-        
-        if (lengths.size() % 2 == 1) {
-        	correctionConstant = (Integer) lengths.get((int)( (lengths.size()+1) /2 -1));
-        } else {
-        	int lower = (Integer) lengths.get((int)(lengths.size()/2 -1));
-        	int upper = (Integer) lengths.get((int)(lengths.size()/2));
-			
-        	correctionConstant =  (int) ((lower + upper) / 2.0);
-        }	
+        	for (int ci = 0; ci < contexts.length; ci++) {
+	    		lengths.add(contexts[ci].length);  
+        	}
+		Collections.sort(lengths);
+		System.out.println("nr of event sizes: " + lengths.size());
+
+		for (int i = 0; i < lengths.size(); i++) {
+			System.out.print(lengths.get(i) + ", ");
+		}
+		System.out.println();
+
+		if (lengths.size() % 2 == 1) {
+			correctionConstant = (Integer) lengths.get((int)( (lengths.size()+1) /2 -1));
+		} else {
+			int lower = (Integer) lengths.get((int)(lengths.size()/2 -1));
+			int upper = (Integer) lengths.get((int)(lengths.size()/2));
+
+			correctionConstant =  (int) ((lower + upper) / 2.0);
+		}	
 	}
 	  
-	display("correctionConst: " + correctionConstant +"\n");
+	display("correctionConstant: " + correctionConstant +"\n");
 
     display("done.\n");
 
