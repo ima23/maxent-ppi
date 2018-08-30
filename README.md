@@ -7,7 +7,7 @@ Datasets based on [CYC2008 v2.0](http://wodaklab.org/cyc2008/) a <i>S. cerevisia
 Dataset folder:
 - protein/gene GO annotaiton files: go2ppi_fbgn.anno and go2ppi_gene_symbol.anno
 - protein/gene interaction files: go2ppi_fgbn.ppi and go2ppi_gene_symbol.ppi (first 500 positive set, last 500 negative set)
-- Gene Ontology OBO file: go2ppi_fbgn.anno
+- Gene Ontology OBO file: gene_ontology_edit_01_12_11.obo
 - Yeast 2017: yeast_ppis_ORF_1379.txt and yeast_ppis_ORF_1379_IDs_624.txt (positive set); lowConf_yeast_ppis1379_IDs618_ppis.txt and lowConf_yeast_ppis1379_IDs618_prots.txt (negative set); ppi_GO_merged.txt (postive and negative set together) 
 
 ## Maximum Entropy package
