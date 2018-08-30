@@ -28,4 +28,4 @@ Java wrapper functions:
 
 ## Reference
 Open access online publication:  
-Armean,I.M. et al. (2018) Co-complex protein membership evaluation using Maximum Entropy on GO ontology and InterPro annotation. Bioinformatics. 0-0 DOI: https://doi.org/10.1093/bioinformatics/btx803 [Epub ahead of print]
+Armean,I.M. et al. (2018) Co-complex protein membership evaluation using Maximum Entropy on GO ontology and InterPro annotation. Bioinformatics, 34, 1884–1892. DOI: https://doi.org/10.1093/bioinformatics/btx803
