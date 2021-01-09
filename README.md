@@ -1,4 +1,6 @@
 # maxent-ppi
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ima23/maxent-ppi/blob/master/gis-maxent/LICENSE)
+[![release](https://img.shields.io/badge/release-v1.0-green?logo=github)](https://github.com/ima23/maxent-ppi/releases)
 
 Java executable jar to train and evaluate protein-protein interactions based on ontology annotations using a Maximum Entropy model.
 
